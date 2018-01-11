@@ -7,10 +7,10 @@ package com.dyf.model;
  */
 public class ResultParklotInfo {
 
-	public String parklotName; // 停车场名称
-	public int distance; // 车辆距离停车场的距离，单位 米
-	public int time;// 车辆行驶到停车场所需的时间
-	public int noParkNum; //停车场的未停车数
+	private String parklotName; // 停车场名称
+	private int distance; // 车辆距离停车场的距离，单位 米
+	private int time;// 车辆行驶到停车场所需的时间
+	private int noParkNum; //停车场的未停车数
 	private double noParkRate; //停车场的未停车率
 	private int parklotAmount; // 停车场车位数量
 	private String parklotLng; // 停车场位置精度

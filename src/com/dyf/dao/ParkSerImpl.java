@@ -26,11 +26,11 @@ public class ParkSerImpl implements ParkSer {
 
 		ParkSerImpl parkSerImpl = new ParkSerImpl();
 		
-		/*SysoUtils.print("按照时间排序的停车场信息----------------------------------");
+		SysoUtils.print("按照时间排序的停车场信息----------------------------------");
 		List<ResultParklotInfo> bestParklots = parkSerImpl.getBestParklot("time", lng, lat);
 		for (int i = 0; i < bestParklots.size(); i++) {
 			SysoUtils.print("排序后的时间："+bestParklots.get(i).getTime());
-		}*/
+		}
 		
 		/*SysoUtils.print("按照距离排序的停车场信息----------------------------------");
 		List<ResultParklotInfo> bestParklots = parkSerImpl.getBestParklot("distance", lng, lat);
