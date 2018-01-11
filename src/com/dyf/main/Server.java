@@ -4,6 +4,7 @@ import org.apache.cxf.jaxws.JaxWsServerFactoryBean;
 
 import com.dyf.dao.ParkSerImpl;
 import com.dyf.service.ParkSer;
+import com.dyf.utils.Inet;
 
 public class Server {
 
@@ -11,9 +12,10 @@ public class Server {
 		
 		System.out.println("开启webservice。。。");
 		ParkSer parkSer = new ParkSerImpl();
-		String IP = "http://192.168.63.1:8080/";
+		String IP = Inet.getIP() ;
+		String http = "http://"+IP+":8080/";
 		String serviceName = "parkservice";
-		String address = IP+serviceName;
+		String address = http+serviceName;
 		JaxWsServerFactoryBean factoryBean = new JaxWsServerFactoryBean();
 		factoryBean.setAddress(address); // 设置暴露地址
 		factoryBean.setServiceClass(ParkSer.class); //设置接口类
