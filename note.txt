@@ -1,0 +1,4 @@
+在对得到的bestParklotInfo进行按条件排序时，从网上找了一段进行按条件排序的代码，下面是网址：
+https://www.cnblogs.com/nayitian/p/3322267.html
+感谢原作者，解释很详细。
+使用SortList类，model中不需要写日期格式化，以及compareTo方法。
