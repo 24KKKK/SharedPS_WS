@@ -21,22 +21,26 @@ public class ParkSerImpl implements ParkSer {
 
 	public static void main(String[] args) {
 		// 自己的位置信息
-		String lng = Constant.selfLng;
-		String lat = Constant.selfLat;
+		//String lng = Constant.selfLng;
+		//String lat = Constant.selfLat;
+		
+		//手机在毕设室的经纬度信息38.089,114.514
+		String lng = "114.514";
+		String lat = "38.089";
 
 		ParkSerImpl parkSerImpl = new ParkSerImpl();
 		
-		SysoUtils.print("按照时间排序的停车场信息----------------------------------");
+		/*SysoUtils.print("按照时间排序的停车场信息----------------------------------");
 		List<ResultParklotInfo> bestParklots = parkSerImpl.getBestParklot("time", lng, lat);
 		for (int i = 0; i < bestParklots.size(); i++) {
 			SysoUtils.print("排序后的时间："+bestParklots.get(i).getTime());
-		}
+		}*/
 		
-		/*SysoUtils.print("按照距离排序的停车场信息----------------------------------");
+		SysoUtils.print("按照距离排序的停车场信息----------------------------------");
 		List<ResultParklotInfo> bestParklots = parkSerImpl.getBestParklot("distance", lng, lat);
 		for (int i = 0; i < bestParklots.size(); i++) {
-			SysoUtils.print("排序后的距离："+bestParklots.get(i).getDistance());
-		}*/
+			SysoUtils.print("排序后的停车场名称："+bestParklots.get(i).getParklotName()+"  距离："+bestParklots.get(i).getDistance());
+		}
 		
 		/*SysoUtils.print("按照未停车数排序的停车场信息----------------------------------");
 		List<ResultParklotInfo> bestParklots = parkSerImpl.getBestParklot("noParkNum", lng, lat);
@@ -78,25 +82,32 @@ public class ParkSerImpl implements ParkSer {
 
 		switch (condi) {
 		case "time":
+			SysoUtils.print("根据时间来查找停车场，个人经纬度为："+selfLng+" "+selfLat);
 			sortList.sortByMethod(nearParklots, "getTime", false);
 			break;
 
 		case "distance":
+			SysoUtils.print("根据距离来查找停车场，个人经纬度为："+selfLng+" "+selfLat);
 			sortList.sortByMethod(nearParklots, "getDistance", false);
 			break;
 
 		case "noParkNum":
+			SysoUtils.print("根据未停车数来查找停车场，个人经纬度为："+selfLng+" "+selfLat);
 			sortList.sortByMethod(nearParklots, "getNoParkNum", true);
 			break;
 
 		case "multiple":
-
+			SysoUtils.print("综合条件来查找停车场，个人经纬度为："+selfLng+" "+selfLat);
 			break;
 
 		default:
 			break;
 		}
+		SysoUtils.print("返回的停车场信息为：");
+		for(int i=0;i<nearParklots.size();i++){
+			SysoUtils.print("名称："+nearParklots.get(i).getParklotName()+" 距离："+nearParklots.get(i).getDistance()+" 时间："+nearParklots.get(i).getTime()+" 未停车数："+nearParklots.get(i).getNoParkNum());
 
+		}
 		return nearParklots;
 	}
 

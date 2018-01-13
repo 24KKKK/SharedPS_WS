@@ -3,9 +3,9 @@ package com.dyf.utils;
 public class Constant {
 	
 	/**
-	 * 自己与停车场的路线距离2000米内
+	 * 自己与停车场的实际路线距离多少米内
 	 */
-	public static int DISTANCE = 2000;
+	public static int DISTANCE = 5000;
 	
 	/**
 	 * 开车到达停车场的时间1200秒内

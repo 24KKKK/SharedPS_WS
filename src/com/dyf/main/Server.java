@@ -5,6 +5,7 @@ import org.apache.cxf.jaxws.JaxWsServerFactoryBean;
 import com.dyf.dao.ParkSerImpl;
 import com.dyf.service.ParkSer;
 import com.dyf.utils.Inet;
+import com.dyf.utils.SysoUtils;
 
 public class Server {
 
@@ -21,7 +22,8 @@ public class Server {
 		factoryBean.setServiceClass(ParkSer.class); //设置接口类
 		factoryBean.setServiceBean(parkSer); // 设置实现类
 		factoryBean.create();
-		System.out.println("开启webservice成功。。。");		
+		System.out.println("开启webservice成功。。。");	
+		SysoUtils.print("wsdl地址为："+address+"?wsdl");
 	}
 
 }

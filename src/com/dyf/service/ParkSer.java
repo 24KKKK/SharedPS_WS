@@ -27,7 +27,7 @@ public interface ParkSer {
 	 * @return List<ResultParklotInfo> 返回排序之后的符合条件的停车场信息
 	 */
 	@WebResult(name = "resultBestParklot", targetNamespace = "http://service.dyf.com")
-	@WebMethod(action = "http://service,dyf.com/getBestParklot")
+	@WebMethod(action = "http://service.dyf.com/getBestParklot")
 	public List<ResultParklotInfo> getBestParklot(
 			@WebParam(name = "condition", targetNamespace = "http://service.dyf.com") String condi,
 			@WebParam(name = "selfLng", targetNamespace = "http://service.dyf.com") String selfLng,
