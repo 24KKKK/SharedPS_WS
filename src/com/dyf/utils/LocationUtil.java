@@ -11,7 +11,7 @@ public class LocationUtil {
 	 * 传入一个地点的经纬度信息，返回地点所在的省市区数组，arr[].0 1 2分别是省市区
 	 * @param longtitude 经度值
 	 * @param latitude 纬度值
-	 * @return
+	 * @return 返回经纬度所在的省市区数组，arr[].0 1 2分别是省市区
 	 */
 	public static String[] getLocation(String longtitude, String latitude) {
 		// lat 31.2990170 纬度

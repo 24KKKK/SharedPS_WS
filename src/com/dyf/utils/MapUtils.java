@@ -8,12 +8,12 @@ public class MapUtils {
     }  
   
     /** 
-     * 计算两个经纬度之间的距离,计算结果单位：米
+     * 计算两个经纬度之间的直线距离,计算结果单位：米
      * @param lat1 
      * @param lng1 
      * @param lat2 
      * @param lng2 
-     * @return 
+     * @return 返回经纬度之间的直线距离，单位 米
      */  
     public static int GetDistance(double lat1, double lng1, double lat2, double lng2)  
     {  

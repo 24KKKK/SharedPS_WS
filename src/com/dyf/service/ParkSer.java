@@ -32,4 +32,20 @@ public interface ParkSer {
 			@WebParam(name = "condition", targetNamespace = "http://service.dyf.com") String condi,
 			@WebParam(name = "selfLng", targetNamespace = "http://service.dyf.com") String selfLng,
 			@WebParam(name = "selfLat", targetNamespace = "http://service.dyf.com") String selfLat);
+
+	/**
+	 * 获取所有的停车场信息，返回给手机端
+	 * @param selfLng 个人的经度信息
+	 * @param selfLat 个人的纬度信息
+	 * @return List<ResultParklotInfo> 返回所有的停车场信息
+	 */
+	@WebResult(name = "resultAllParklot", targetNamespace = "http://service.dyf.com")
+	@WebMethod(action = "http://service.dyf.com/getAllParklot")
+	public List<ResultParklotInfo> getAllParklot(
+			@WebParam(name = "selfLng", targetNamespace = "http://service.dyf.com") String selfLng,
+			@WebParam(name = "selfLat", targetNamespace = "http://service.dyf.com") String selfLat);
+	
+	
+	
+	
 }

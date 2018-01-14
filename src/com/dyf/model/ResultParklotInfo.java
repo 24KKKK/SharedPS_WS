@@ -46,6 +46,32 @@ public class ResultParklotInfo {
 		this.parklotLat = parklotLat;
 		this.parklotDescription = parklotDescription;
 	}
+	
+	
+
+	/**
+	 * 包含未停车数，不包含未停车率
+	 * @param parklotName
+	 * @param distance
+	 * @param time
+	 * @param noParkNum 包含未停车数
+	 * @param parklotAmount
+	 * @param parklotLng
+	 * @param parklotLat
+	 * @param parklotDescription
+	 */
+	public ResultParklotInfo(String parklotName, int distance, int time, int noParkNum, int parklotAmount,
+			String parklotLng, String parklotLat, String parklotDescription) {
+		super();
+		this.parklotName = parklotName;
+		this.distance = distance;
+		this.time = time;
+		this.noParkNum = noParkNum;
+		this.parklotAmount = parklotAmount;
+		this.parklotLng = parklotLng;
+		this.parklotLat = parklotLat;
+		this.parklotDescription = parklotDescription;
+	}
 
 	/**
 	 * 不包含未停车数

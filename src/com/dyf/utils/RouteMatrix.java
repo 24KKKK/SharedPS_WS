@@ -26,6 +26,15 @@ public class RouteMatrix {
 	public static void main(String[] args) {
 		getDistanceAndTime("114.345678", "38.088783", "114.345614", "38.088713");
 	}
+	
+	/**
+	 * 根据两个坐标点得到实际的路线距离 ，单位 米 和行车时间 单位秒
+	 * @param Lng1 
+	 * @param Lat1
+	 * @param Lng2
+	 * @param Lat2
+	 * @return 返回String[] 包含实际路线距离和行车时间
+	 */
 	@SuppressWarnings("deprecation")
 	public static String[] getDistanceAndTime(String Lng1,String Lat1,String Lng2,String Lat2) {
 		String[] disandtime={"",""};
