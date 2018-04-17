@@ -12,10 +12,12 @@ import com.dyf.model.ResultParklotInfo;
 import com.dyf.model.Table_ParklotInfo;
 import com.dyf.service.ParkSer;
 import com.dyf.utils.Constant;
+import com.dyf.utils.Convert;
 import com.dyf.utils.LocationUtil;
 import com.dyf.utils.RouteMatrix;
 import com.dyf.utils.SortList;
 import com.dyf.utils.SysoUtils;
+import com.sun.xml.bind.annotation.OverrideAnnotationOf;
 
 public class ParkSerImpl implements ParkSer {
 
@@ -364,5 +366,42 @@ public class ParkSerImpl implements ParkSer {
 		dbBean.close();
 		return num;
 	}
+
+	@Override
+	public int insertQQUserInfo(String openid, String nickname, String gender, String province, String city,
+			String figureurl) {
+		String selectSQL = "select nickname from table_qquserinfo where openid ="+"'"+openid+"'";
+		SysoUtils.print("selectSQL:"+selectSQL);
+		DBBean dbBean = new DBBean();
+		ResultSet rSet = dbBean.executeQuery(selectSQL);
+		try {
+			if (rSet.next()) {
+				return 1;
+			}
+			// 如果上面的查询没有返回1，则说明没有记录，进行用户信息插入
+			String insertSQL = "insert into table_qquserinfo values ('"+openid+"','"+nickname+"',"+Convert.genderToInt(gender)+",'"+province+"','"+city+"','"+figureurl+"')";
+			SysoUtils.print("insertSQL:"+insertSQL);
+			int i = dbBean.executeUpdate(insertSQL);
+			if (i == 1) 
+				return 1;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		finally {
+			try {
+				rSet.close();
+				dbBean.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+		
+		
+		return 0;
+	}
+	
+	
 
 }

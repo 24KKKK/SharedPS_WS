@@ -45,6 +45,26 @@ public interface ParkSer {
 			@WebParam(name = "selfLng", targetNamespace = "http://service.dyf.com") String selfLng,
 			@WebParam(name = "selfLat", targetNamespace = "http://service.dyf.com") String selfLat);
 	
+	/**
+	 * 将QQ登录的用户信息保存进数据库
+	 * @param openid 用户唯一识别码
+	 * @param nickname 用户昵称
+	 * @param gender 性别
+	 * @param province 省份
+	 * @param city 城市
+	 * @param figureurl 用户头像URL
+	 * @return int 是否保存成功
+	 */
+	@WebResult(name = "insertResult", targetNamespace = "http://service.dyf.com")
+	@WebMethod(action = "http://service.dyf.com/insertQQUserInfo")
+	public int insertQQUserInfo(
+			@WebParam(name = "openid", targetNamespace = "http://service.dyf.com") String openid,
+			@WebParam(name = "nickname", targetNamespace = "http://service.dyf.com") String nickname,
+			@WebParam(name = "gender", targetNamespace = "http://service.dyf.com") String gender,
+			@WebParam(name = "province", targetNamespace = "http://service.dyf.com") String province,
+			@WebParam(name = "city", targetNamespace = "http://service.dyf.com") String city,
+			@WebParam(name = "figureurl", targetNamespace = "http://service.dyf.com") String figureurl);
+	
 	
 	
 	
