@@ -13,7 +13,8 @@ public class Server {
 		
 		System.out.println("开启webservice。。。");
 		ParkSer parkSer = new ParkSerImpl();
-		String IP = Inet.getIP() ;
+		String IP = "192.168.191.1";
+		//String IP = Inet.getIP() ;
 		String http = "http://"+IP+":8080/";
 		String serviceName = "parkservice";
 		String address = http+serviceName;

@@ -65,7 +65,29 @@ public interface ParkSer {
 			@WebParam(name = "city", targetNamespace = "http://service.dyf.com") String city,
 			@WebParam(name = "figureurl", targetNamespace = "http://service.dyf.com") String figureurl);
 	
+	/**
+	 * 根据用户的openid获得余额，进行返回
+	 * @param openid 用户的id
+	 * @return double 用户余额
+	 */
+	@WebResult(name = "resultBalance", targetNamespace = "http://service.dyf.com")
+	@WebMethod(action = "http://service.dyf.com/getBalance")
+	public double getBalance(
+			@WebParam(name = "openid", targetNamespace = "http://service.dyf.com") String openid);
 	
+	/**
+	 * 将用户重要操作保存进数据库（比如充值）
+	 * @param openid 用户唯一识别码
+	 * @param reChargeNum 充值金额
+	 * @param optionName 操作名称
+	 * @return int 是否保存成功
+	 */
+	@WebResult(name = "insertResult", targetNamespace = "http://service.dyf.com")
+	@WebMethod(action = "http://service.dyf.com/insertReChargeOption")
+	public int insertReChargeOption(
+			@WebParam(name = "openid", targetNamespace = "http://service.dyf.com") String openid,
+			@WebParam(name = "reChargeNum", targetNamespace = "http://service.dyf.com") String reChargeNum,
+			@WebParam(name = "optionName", targetNamespace = "http://service.dyf.com") String optionName);
 	
 	
 }

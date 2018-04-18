@@ -13,6 +13,7 @@ import com.dyf.model.Table_ParklotInfo;
 import com.dyf.service.ParkSer;
 import com.dyf.utils.Constant;
 import com.dyf.utils.Convert;
+import com.dyf.utils.CreateDate;
 import com.dyf.utils.LocationUtil;
 import com.dyf.utils.RouteMatrix;
 import com.dyf.utils.SortList;
@@ -23,65 +24,81 @@ public class ParkSerImpl implements ParkSer {
 
 	public static void main(String[] args) {
 		// 自己的位置信息
-		//String lng = Constant.selfLng;
-		//String lat = Constant.selfLat;
-		
-		//手机在毕设室的经纬度信息38.089,114.514
+		// String lng = Constant.selfLng;
+		// String lat = Constant.selfLat;
+
+		// 手机在毕设室的经纬度信息38.089,114.514
 		String lng = "114.514";
 		String lat = "38.089";
 
 		ParkSerImpl parkSerImpl = new ParkSerImpl();
-		
-		//获取全部的停车场信息
-		List<ResultParklotInfo> allParklots = parkSerImpl.getAllParklot(lng, lat);
-		for(int i =0;i<allParklots.size();i++){
-			SysoUtils.print(allParklots.get(i).getParklotName()+"的未停车数为："+allParklots.get(i).getNoParkNum());
-		}
-		
-		/*SysoUtils.print("按照时间排序的停车场信息----------------------------------");
-		List<ResultParklotInfo> bestParklots = parkSerImpl.getBestParklot("time", lng, lat);
-		for (int i = 0; i < bestParklots.size(); i++) {
-			SysoUtils.print("排序后的时间："+bestParklots.get(i).getTime());
-		}*/
-		
-		/*SysoUtils.print("按照距离排序的停车场信息----------------------------------");
-		List<ResultParklotInfo> bestParklots = parkSerImpl.getBestParklot("distance", lng, lat);
-		for (int i = 0; i < bestParklots.size(); i++) {
-			SysoUtils.print("排序后的停车场名称："+bestParklots.get(i).getParklotName()+"  距离："+bestParklots.get(i).getDistance());
-		}*/
-		
-		/*SysoUtils.print("按照未停车数排序的停车场信息----------------------------------");
-		List<ResultParklotInfo> bestParklots = parkSerImpl.getBestParklot("noParkNum", lng, lat);
-		for (int i = 0; i < bestParklots.size(); i++) {
-			SysoUtils.print("排序后的未停车数："+bestParklots.get(i).getNoParkNum());
-		}*/
-		
-		/*List<Table_ParklotInfo> sameAreaParklotInfos = parkSerImpl.getSameAreaParklotInfos(lng, lat);
-		for (int i = 0; i < sameAreaParklotInfos.size(); i++) {
-			SysoUtils.print("相同地区信息的停车场名称：" + sameAreaParklotInfos.get(i).getParklotName());
-		}*/
 
-		/*SysoUtils.print("输出getNearParklots结果----------------------------------------------------");
-		List<ResultParklotInfo> nearParklots = parkSerImpl.getNearParklots(lng, lat);
-		SysoUtils.print("nearParklots.size:" + nearParklots.size());
-		for (int i = 0; i < nearParklots.size(); i++) {
-			SysoUtils.print("距离小于" + Constant.DISTANCE + "米的停车场名称：" + nearParklots.get(i).getParklotName());
-			SysoUtils.print("未停车率：" + nearParklots.get(i).getNoParkRate());
-			SysoUtils.print("停车场描述："+nearParklots.get(i).getParklotDescription());
-			SysoUtils.print("停车场经度："+nearParklots.get(i).getParklotLng());
-			SysoUtils.print("停车场纬度："+nearParklots.get(i).getParklotLat());
-			SysoUtils.print("停车场距离："+nearParklots.get(i).getDistance());
-			SysoUtils.print("停车场车位总数："+nearParklots.get(i).getParklotAmount());
-			SysoUtils.print("停车场时间："+nearParklots.get(i).getTime());
-			SysoUtils.print("停车场未停车数："+nearParklots.get(i).getNoParkNum());			
-			SysoUtils.print("----------------------------------------------------");
-		}*/
-		
-		/*double noParkRate = parkSerImpl.getNoParkRate("测试停车场");
-		SysoUtils.print("noParkRate:" + noParkRate);*/
-		 
+		// 获取全部的停车场信息
+		List<ResultParklotInfo> allParklots = parkSerImpl.getAllParklot(lng, lat);
+		for (int i = 0; i < allParklots.size(); i++) {
+			SysoUtils.print(allParklots.get(i).getParklotName() + "的未停车数为：" + allParklots.get(i).getNoParkNum());
+		}
+
+		/*
+		 * SysoUtils.print("按照时间排序的停车场信息----------------------------------");
+		 * List<ResultParklotInfo> bestParklots =
+		 * parkSerImpl.getBestParklot("time", lng, lat); for (int i = 0; i <
+		 * bestParklots.size(); i++) {
+		 * SysoUtils.print("排序后的时间："+bestParklots.get(i).getTime()); }
+		 */
+
+		/*
+		 * SysoUtils.print("按照距离排序的停车场信息----------------------------------");
+		 * List<ResultParklotInfo> bestParklots =
+		 * parkSerImpl.getBestParklot("distance", lng, lat); for (int i = 0; i <
+		 * bestParklots.size(); i++) {
+		 * SysoUtils.print("排序后的停车场名称："+bestParklots.get(i).getParklotName()+
+		 * "  距离："+bestParklots.get(i).getDistance()); }
+		 */
+
+		/*
+		 * SysoUtils.print("按照未停车数排序的停车场信息----------------------------------");
+		 * List<ResultParklotInfo> bestParklots =
+		 * parkSerImpl.getBestParklot("noParkNum", lng, lat); for (int i = 0; i
+		 * < bestParklots.size(); i++) {
+		 * SysoUtils.print("排序后的未停车数："+bestParklots.get(i).getNoParkNum()); }
+		 */
+
+		/*
+		 * List<Table_ParklotInfo> sameAreaParklotInfos =
+		 * parkSerImpl.getSameAreaParklotInfos(lng, lat); for (int i = 0; i <
+		 * sameAreaParklotInfos.size(); i++) { SysoUtils.print("相同地区信息的停车场名称：" +
+		 * sameAreaParklotInfos.get(i).getParklotName()); }
+		 */
+
+		/*
+		 * SysoUtils.print(
+		 * "输出getNearParklots结果----------------------------------------------------"
+		 * ); List<ResultParklotInfo> nearParklots =
+		 * parkSerImpl.getNearParklots(lng, lat);
+		 * SysoUtils.print("nearParklots.size:" + nearParklots.size()); for (int
+		 * i = 0; i < nearParklots.size(); i++) { SysoUtils.print("距离小于" +
+		 * Constant.DISTANCE + "米的停车场名称：" +
+		 * nearParklots.get(i).getParklotName()); SysoUtils.print("未停车率：" +
+		 * nearParklots.get(i).getNoParkRate());
+		 * SysoUtils.print("停车场描述："+nearParklots.get(i).getParklotDescription())
+		 * ; SysoUtils.print("停车场经度："+nearParklots.get(i).getParklotLng());
+		 * SysoUtils.print("停车场纬度："+nearParklots.get(i).getParklotLat());
+		 * SysoUtils.print("停车场距离："+nearParklots.get(i).getDistance());
+		 * SysoUtils.print("停车场车位总数："+nearParklots.get(i).getParklotAmount());
+		 * SysoUtils.print("停车场时间："+nearParklots.get(i).getTime());
+		 * SysoUtils.print("停车场未停车数："+nearParklots.get(i).getNoParkNum());
+		 * SysoUtils.print(
+		 * "----------------------------------------------------"); }
+		 */
+
+		/*
+		 * double noParkRate = parkSerImpl.getNoParkRate("测试停车场");
+		 * SysoUtils.print("noParkRate:" + noParkRate);
+		 */
+
 	}
-	
+
 	@Override
 	public List<ResultParklotInfo> getBestParklot(String condi, String selfLng, String selfLat) {
 
@@ -90,59 +107,60 @@ public class ParkSerImpl implements ParkSer {
 
 		switch (condi) {
 		case "time":
-			SysoUtils.print("根据时间来查找停车场，个人经纬度为："+selfLng+" "+selfLat);
+			SysoUtils.print("根据时间来查找停车场，个人经纬度为：" + selfLng + " " + selfLat);
 			sortList.sortByMethod(nearParklots, "getTime", false);
 			break;
 
 		case "distance":
-			SysoUtils.print("根据距离来查找停车场，个人经纬度为："+selfLng+" "+selfLat);
+			SysoUtils.print("根据距离来查找停车场，个人经纬度为：" + selfLng + " " + selfLat);
 			sortList.sortByMethod(nearParklots, "getDistance", false);
 			break;
 
 		case "noParkNum":
-			SysoUtils.print("根据未停车数来查找停车场，个人经纬度为："+selfLng+" "+selfLat);
+			SysoUtils.print("根据未停车数来查找停车场，个人经纬度为：" + selfLng + " " + selfLat);
 			sortList.sortByMethod(nearParklots, "getNoParkNum", true);
 			break;
 
 		case "multiple":
-			SysoUtils.print("综合条件来查找停车场，个人经纬度为："+selfLng+" "+selfLat);
+			SysoUtils.print("综合条件来查找停车场，个人经纬度为：" + selfLng + " " + selfLat);
 			break;
 
 		default:
 			break;
 		}
 		SysoUtils.print("返回的停车场信息为：");
-		for(int i=0;i<nearParklots.size();i++){
-			SysoUtils.print("名称："+nearParklots.get(i).getParklotName()+" 距离："+nearParklots.get(i).getDistance()+" 时间："+nearParklots.get(i).getTime()+" 未停车数："+nearParklots.get(i).getNoParkNum());
+		for (int i = 0; i < nearParklots.size(); i++) {
+			SysoUtils.print("名称：" + nearParklots.get(i).getParklotName() + " 距离：" + nearParklots.get(i).getDistance()
+					+ " 时间：" + nearParklots.get(i).getTime() + " 未停车数：" + nearParklots.get(i).getNoParkNum());
 
 		}
 		return nearParklots;
 	}
-	
+
 	@Override
 	public List<ResultParklotInfo> getAllParklot(String selfLng, String selfLat) {
 		List<ResultParklotInfo> resultParklotInfos = new ArrayList<ResultParklotInfo>();
-		
+
 		String selectAllSql = "SELECT parklotName, parklotAmount, parklotLng, parklotLat, parklotDescription FROM  table_parklotinfo;";
 		DBBean dbBean = new DBBean();
 		ResultSet rSet = dbBean.executeQuery(selectAllSql);
 		try {
-			while(rSet.next()){
+			while (rSet.next()) {
 				String parklotName = rSet.getString("parklotName");
 				int parklotAmount = rSet.getInt("parklotAmount");
 				String parklotLng = rSet.getString("parklotLng");
 				String parklotLat = rSet.getString("parklotLat");
 				String description = rSet.getString("parklotDescription");
-				int noParkNum = parklotAmount-getParkNum(parklotName);
-				double noParkRate = (double) noParkNum/parklotAmount;
+				int noParkNum = parklotAmount - getParkNum(parklotName);
+				double noParkRate = (double) noParkNum / parklotAmount;
 				String[] disAndTime = RouteMatrix.getDistanceAndTime(selfLng, selfLat, parklotLng, parklotLat);
 				ResultParklotInfo resultParklotInfo = new ResultParklotInfo(parklotName,
-						Integer.parseInt(disAndTime[0]),Integer.parseInt(disAndTime[1]),noParkNum,noParkRate,
-						parklotAmount,parklotLng,parklotLat,description);
-				resultParklotInfos.add(resultParklotInfo);				
+						Integer.parseInt(disAndTime[0]), Integer.parseInt(disAndTime[1]), noParkNum, noParkRate,
+						parklotAmount, parklotLng, parklotLat, description);
+				resultParklotInfos.add(resultParklotInfo);
 			}
 		} catch (SQLException e) {
-			SysoUtils.print("getAllParklot错误："+e.toString());
+			SysoUtils.print("getAllParklot错误：" + e.toString());
 			e.printStackTrace();
 		}
 		return resultParklotInfos;
@@ -222,12 +240,12 @@ public class ParkSerImpl implements ParkSer {
 				String name = parklotInfos.get(i).getParklotName();
 				int distance = Integer.parseInt(arr[0]);
 				int amount = parklotInfos.get(i).getParklotAmount();
-				int noParkNum = amount-getParkNum(name);
+				int noParkNum = amount - getParkNum(name);
 				String description = parklotInfos.get(i).getParklotDescription();
 				int time = Integer.parseInt(arr[1]);
 				double rate = getNoParkRate(name);
-				ResultParklotInfo resultParklotInfo = new ResultParklotInfo(name, distance, time, noParkNum, rate, amount,
-						destinationLng, destinationLat, description);
+				ResultParklotInfo resultParklotInfo = new ResultParklotInfo(name, distance, time, noParkNum, rate,
+						amount, destinationLng, destinationLat, description);
 				results.add(resultParklotInfo);
 			}
 		}
@@ -306,9 +324,9 @@ public class ParkSerImpl implements ParkSer {
 		double rate = 0.0;
 
 		int num = 0; // 停车场已经停车的数量
-		num=getParkNum(parklotName);
+		num = getParkNum(parklotName);
 		DBBean dbBean = new DBBean();
-		
+
 		String selectSql = "select parklotAmount from table_parklotinfo where parklotName = '" + parklotName + "';";
 		SysoUtils.print("selectSql:" + selectSql);
 
@@ -332,7 +350,7 @@ public class ParkSerImpl implements ParkSer {
 		dbBean.close();
 		return rate;
 	}
-	
+
 	/**
 	 * 返回指定停车场的已经停车数
 	 * 
@@ -345,7 +363,7 @@ public class ParkSerImpl implements ParkSer {
 		String countSql = "select count(*) num from table_inoutinfo where parkid != 0 and parklotname = '" + parklotName
 				+ "';";
 		SysoUtils.print("countSql:" + countSql);
-		
+
 		ResultSet rSet = dbBean.executeQuery(countSql);
 		int num = 0; // 停车场已经停车的数量
 		try {
@@ -362,7 +380,7 @@ public class ParkSerImpl implements ParkSer {
 			}
 		}
 
-		SysoUtils.print(parklotName+"已停车：" + num);
+		SysoUtils.print(parklotName + "已停车：" + num);
 		dbBean.close();
 		return num;
 	}
@@ -370,8 +388,8 @@ public class ParkSerImpl implements ParkSer {
 	@Override
 	public int insertQQUserInfo(String openid, String nickname, String gender, String province, String city,
 			String figureurl) {
-		String selectSQL = "select nickname from table_qquserinfo where openid ="+"'"+openid+"'";
-		SysoUtils.print("selectSQL:"+selectSQL);
+		String selectSQL = "select nickname from table_qquserinfo where openid =" + "'" + openid + "'";
+		SysoUtils.print("selectSQL:" + selectSQL);
 		DBBean dbBean = new DBBean();
 		ResultSet rSet = dbBean.executeQuery(selectSQL);
 		try {
@@ -379,15 +397,19 @@ public class ParkSerImpl implements ParkSer {
 				return 1;
 			}
 			// 如果上面的查询没有返回1，则说明没有记录，进行用户信息插入
-			String insertSQL = "insert into table_qquserinfo values ('"+openid+"','"+nickname+"',"+Convert.genderToInt(gender)+",'"+province+"','"+city+"','"+figureurl+"')";
-			SysoUtils.print("insertSQL:"+insertSQL);
+			String insertSQL = "insert into table_qquserinfo values ('" + openid + "','" + nickname + "',"
+					+ Convert.genderToInt(gender) + ",'" + province + "','" + city + "','" + figureurl + "','"
+					+ CreateDate.getDate() + "')";
+			String insertSQL2 = "insert into table_qquserbalance values ('" + openid + "'," + 0 + ")";
+			SysoUtils.print("insertSQL:" + insertSQL);
+			SysoUtils.print("insertSQL2:" + insertSQL2);
 			int i = dbBean.executeUpdate(insertSQL);
-			if (i == 1) 
+			int j = dbBean.executeUpdate(insertSQL2);
+			if (i == 1 && j == 1)
 				return 1;
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}
-		finally {
+		} finally {
 			try {
 				rSet.close();
 				dbBean.close();
@@ -396,12 +418,57 @@ public class ParkSerImpl implements ParkSer {
 				e.printStackTrace();
 			}
 		}
-		
-		
-		
 		return 0;
 	}
-	
-	
+
+	@Override
+	public double getBalance(String openid) {
+		double balance = 0;
+		String selectSQL = "select balance from table_qquserbalance where openid = ('" + openid + "')";
+		SysoUtils.print("selectSQL:" + selectSQL);
+		DBBean dbBean = new DBBean();
+		ResultSet rSet = dbBean.executeQuery(selectSQL);
+		try {
+			while (rSet.next()) {
+				balance = rSet.getDouble("balance");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				rSet.close();
+				dbBean.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return balance;
+	}
+
+	@Override
+	public int insertReChargeOption(String openid, String reChargeNum, String optionName) {
+
+		// 记录用户操作之前，先要将充值操作打进余额中
+		String updateUserBal = "update table_qquserbalance set balance = balance + " + Double.parseDouble(reChargeNum)
+				+ " where openid = '" + openid + "'";
+		SysoUtils.print("updateUserBal：" + updateUserBal);
+		// 将用户的操作记录下来
+		String insertOptionSQL = "INSERT INTO table_qquserrecord VALUES ('" + openid + "','" + optionName + "',"
+				+ Double.parseDouble(reChargeNum) + ",'" + CreateDate.getDate()
+				+ "',(SELECT a.balance FROM table_qquserbalance a WHERE a.openid = '" + openid + "') +"
+				+ Double.parseDouble(reChargeNum) + ")";
+		SysoUtils.print("insertOptionSQL：" + insertOptionSQL);
+		DBBean dbBean = new DBBean();
+		int i = dbBean.executeUpdate(updateUserBal);
+		int j = dbBean.executeUpdate(insertOptionSQL);
+		dbBean.close();
+		if (i == 1 && j == 1) {
+			SysoUtils.print("记录操作成功");
+			return 1;
+		} else {
+			SysoUtils.print("记录操作失败");
+			return 0;
+		}
+	}
 
 }
