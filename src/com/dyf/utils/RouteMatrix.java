@@ -49,8 +49,9 @@ public class RouteMatrix {
 			HttpEntity entity = response.getEntity();
 			InputStream stream = entity.getContent();
 			String string = ConvertStreamToString(stream);
+			SysoUtils.print("string1:"+string);
 			string = string.substring(0,string.length()-1);
-			SysoUtils.print("string:"+string);
+			SysoUtils.print("string2:"+string);
 			JSONObject jsonObject = JSONObject.fromObject(string);
 
 			//先判断请求是否成功

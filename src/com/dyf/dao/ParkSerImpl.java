@@ -1,5 +1,6 @@
 package com.dyf.dao;
 
+import java.io.PrintWriter;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -13,8 +14,10 @@ import com.dyf.model.Table_ParklotInfo;
 import com.dyf.service.ParkSer;
 import com.dyf.utils.Constant;
 import com.dyf.utils.Convert;
+import com.dyf.utils.Count;
 import com.dyf.utils.CreateDate;
 import com.dyf.utils.LocationUtil;
+import com.dyf.utils.ParklotUtil;
 import com.dyf.utils.RouteMatrix;
 import com.dyf.utils.SortList;
 import com.dyf.utils.SysoUtils;
@@ -397,9 +400,9 @@ public class ParkSerImpl implements ParkSer {
 				return 1;
 			}
 			// 如果上面的查询没有返回1，则说明没有记录，进行用户信息插入
-			String insertSQL = "insert into table_qquserinfo values ('" + openid + "','" + nickname + "',"
-					+ Convert.genderToInt(gender) + ",'" + province + "','" + city + "','" + figureurl + "','"
-					+ CreateDate.getDate() + "')";
+			String insertSQL = "insert into table_qquserinfo(openid,nickname,gender,province,city,figureurl,addtimestamp) values ('"
+					+ openid + "','" + nickname + "'," + Convert.genderToInt(gender) + ",'" + province + "','" + city
+					+ "','" + figureurl + "','" + CreateDate.getDate() + "')";
 			String insertSQL2 = "insert into table_qquserbalance values ('" + openid + "'," + 0 + ")";
 			SysoUtils.print("insertSQL:" + insertSQL);
 			SysoUtils.print("insertSQL2:" + insertSQL2);
@@ -447,7 +450,6 @@ public class ParkSerImpl implements ParkSer {
 
 	@Override
 	public int insertReChargeOption(String openid, String reChargeNum, String optionName) {
-
 		// 记录用户操作之前，先要将充值操作打进余额中
 		String updateUserBal = "update table_qquserbalance set balance = balance + " + Double.parseDouble(reChargeNum)
 				+ " where openid = '" + openid + "'";
@@ -471,4 +473,92 @@ public class ParkSerImpl implements ParkSer {
 		}
 	}
 
+	@Override
+	public int insertReserveOption(String openid, String parklotName, String startTime, String endTime,
+			String startDate, String endDate) {
+		double balance = getBalance(openid);
+		double costMoney = Count.getCostMoney(startTime, endTime, startDate, endDate);
+		String createTime = CreateDate.getDate();
+		String insertSQL = "INSERT INTO table_qquserreserve ( openid, parklotname, starttime, endtime, startdate, enddate, createtime, costmoney, balance ) VALUES ('"
+				+ openid + "','" + parklotName + "','" + startTime + "','" + endTime + "', 	'" + startDate + "', 	'"
+				+ endDate + "', 	'" + createTime + "', 	" + costMoney + ", 	" + (balance - costMoney) + " );   ";
+		String updateSQL = "update table_qquserbalance set balance = " + (balance - costMoney) + " where openid = '"
+				+ openid + "'";
+		SysoUtils.print("预定操作插入sql：" + insertSQL);
+		SysoUtils.print("修改用户余额：" + updateSQL);
+		String parklotAdminId = ParklotUtil.getParklotId(parklotName);
+		int parkid = 0;
+		try {
+			parkid = ParklotUtil.getParkNumber(parklotAdminId);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		String plateNum = selectPlateNum(openid);
+		String insertSql = "insert into table_inoutinfo(carid,indatetime,parkid,parkadminid,parklotname) values ( "
+				+ "'" + plateNum + "','" + (startDate + " " + startTime + ":00") + "'," + parkid + ",'" + parklotAdminId
+				+ "'," + "'" + parklotName + "')";
+		SysoUtils.print("insertSql=" + insertSql);
+
+		DBBean dbBean = new DBBean();
+		int k = dbBean.executeUpdate(insertSql);
+		if (k == 1) {
+			SysoUtils.print("添加预定信息成功。");
+		} else {
+			SysoUtils.print("添加预定信息失败。");
+		}
+
+		int i = dbBean.executeUpdate(insertSQL);
+		int j = dbBean.executeUpdate(updateSQL);
+		dbBean.close();
+
+		if (i == 1 && j == 1) {
+			SysoUtils.print("预定车位成功。");
+			return 1;
+		}
+		return 0;
+	}
+
+	@Override
+	public int updatePlateNum(String openid, String plateNum) {
+
+		DBBean dbBean = new DBBean();
+		String plateNum2 = selectPlateNum(openid);
+		if (plateNum2.equals(plateNum)) {
+			return 1;
+		}
+		String updateSQL = "update table_qquserinfo set platenum = '" + plateNum + "' where openid = '" + openid + "'";
+		SysoUtils.print("绑定车牌号sql：" + updateSQL);
+		int i = dbBean.executeUpdate(updateSQL);
+		dbBean.close();
+		if (i == 1) {
+			SysoUtils.print("绑定车牌号成功");
+			return 1;
+		} else {
+			SysoUtils.print("绑定车牌号失败");
+			return 0;
+		}
+	}
+
+	@Override
+	public String selectPlateNum(String openid) {
+		String plateNum = ""; // 从数据库查出来的车牌号
+
+		String selectSQL = "select platenum from table_qquserinfo where openid = '" + openid + "'";
+		DBBean dbBean = new DBBean();
+		ResultSet rSet = dbBean.executeQuery(selectSQL);
+		try {
+			while (rSet.next()) {
+				plateNum = rSet.getString("platenum");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		try {
+			rSet.close();
+			dbBean.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return plateNum;
+	}
 }

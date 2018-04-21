@@ -27,4 +27,4 @@ public class Server {
 		SysoUtils.print("wsdl地址为："+address+"?wsdl");
 	}
 
-}
+} 

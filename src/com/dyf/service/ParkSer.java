@@ -89,5 +89,47 @@ public interface ParkSer {
 			@WebParam(name = "reChargeNum", targetNamespace = "http://service.dyf.com") String reChargeNum,
 			@WebParam(name = "optionName", targetNamespace = "http://service.dyf.com") String optionName);
 	
+	/**
+	 * 将用户预定停车位操作保存进数据库
+	 * @param openid 用户唯一识别码
+	 * @param parklotName 停车场名称
+	 * @param startTime 开始停车时间
+	 * @param endTime 结束停车时间
+	 * @param startDate 开始停车日期
+	 * @param endDate 结束停车日期
+	 * @return int 是否保存成功
+	 */
+	@WebResult(name = "insertResult", targetNamespace = "http://service.dyf.com")
+	@WebMethod(action = "http://service.dyf.com/insertReserveOption")
+	public int insertReserveOption(
+			@WebParam(name = "openid", targetNamespace = "http://service.dyf.com") String openid,
+			@WebParam(name = "parklotName", targetNamespace = "http://service.dyf.com") String parklotName,
+			@WebParam(name = "startTime", targetNamespace = "http://service.dyf.com") String startTime,
+			@WebParam(name = "endTime", targetNamespace = "http://service.dyf.com") String endTime,
+			@WebParam(name = "startDate", targetNamespace = "http://service.dyf.com") String startDate,
+			@WebParam(name = "endDate", targetNamespace = "http://service.dyf.com") String endDate);
+	
+	/**
+	 * 将用户绑定的车牌号信息操作保存进数据库
+	 * @param openid 用户唯一识别码
+	 * @param plateNum 车牌号
+	 * @return int 是否保存成功
+	 */
+	@WebResult(name = "insertResult", targetNamespace = "http://service.dyf.com")
+	@WebMethod(action = "http://service.dyf.com/updatePlateNum")
+	public int updatePlateNum(
+			@WebParam(name = "openid", targetNamespace = "http://service.dyf.com") String openid,
+			@WebParam(name = "plateNum", targetNamespace = "http://service.dyf.com") String plateNum);
+	
+	/**
+	 * 根据openid查出该用户的车牌号
+	 * @param openid 用户唯一识别码
+	 * @return String 查询出的车牌号
+	 */
+	@WebResult(name = "selectResult", targetNamespace = "http://service.dyf.com")
+	@WebMethod(action = "http://service.dyf.com/selectPlateNum")
+	public String selectPlateNum(
+			@WebParam(name = "openid", targetNamespace = "http://service.dyf.com") String openid);
+	
 	
 }
