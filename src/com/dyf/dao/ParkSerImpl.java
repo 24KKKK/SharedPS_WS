@@ -42,13 +42,13 @@ public class ParkSerImpl implements ParkSer {
 			SysoUtils.print(allParklots.get(i).getParklotName() + "的未停车数为：" + allParklots.get(i).getNoParkNum());
 		}
 
-		/*
-		 * SysoUtils.print("按照时间排序的停车场信息----------------------------------");
-		 * List<ResultParklotInfo> bestParklots =
-		 * parkSerImpl.getBestParklot("time", lng, lat); for (int i = 0; i <
-		 * bestParklots.size(); i++) {
-		 * SysoUtils.print("排序后的时间："+bestParklots.get(i).getTime()); }
-		 */
+		
+		  SysoUtils.print("按照时间排序的停车场信息----------------------------------");
+		  List<ResultParklotInfo> bestParklots =
+		  parkSerImpl.getBestParklot("time", lng, lat); for (int i = 0; i <
+		  bestParklots.size(); i++) {
+		  SysoUtils.print("排序后的时间："+bestParklots.get(i).getTime()); }
+		 
 
 		/*
 		 * SysoUtils.print("按照距离排序的停车场信息----------------------------------");
@@ -479,9 +479,12 @@ public class ParkSerImpl implements ParkSer {
 		double balance = getBalance(openid);
 		double costMoney = Count.getCostMoney(startTime, endTime, startDate, endDate);
 		String createTime = CreateDate.getDate();
+		String[] startAndEnd = {startTime,endTime,startDate,endDate};
+		startAndEnd = Convert.dateTimeToNormal(startAndEnd);
+		DBBean dbBean = new DBBean();
 		String insertSQL = "INSERT INTO table_qquserreserve ( openid, parklotname, starttime, endtime, startdate, enddate, createtime, costmoney, balance ) VALUES ('"
-				+ openid + "','" + parklotName + "','" + startTime + "','" + endTime + "', 	'" + startDate + "', 	'"
-				+ endDate + "', 	'" + createTime + "', 	" + costMoney + ", 	" + (balance - costMoney) + " );   ";
+				+ openid + "','" + parklotName + "','" + startAndEnd[0] + "','" + startAndEnd[1] + "', 	'" + startAndEnd[2] + "', 	'"
+				+ startAndEnd[3] + "', 	'" + createTime + "', 	" + costMoney + ", 	" + (balance - costMoney) + " );   ";
 		String updateSQL = "update table_qquserbalance set balance = " + (balance - costMoney) + " where openid = '"
 				+ openid + "'";
 		SysoUtils.print("预定操作插入sql：" + insertSQL);
@@ -494,18 +497,17 @@ public class ParkSerImpl implements ParkSer {
 			e.printStackTrace();
 		}
 		String plateNum = selectPlateNum(openid);
-		String insertSql = "insert into table_inoutinfo(carid,indatetime,parkid,parkadminid,parklotname) values ( "
+		/*String insertSql = "insert into table_inoutinfo(carid,indatetime,parkid,parkadminid,parklotname) values ( "
 				+ "'" + plateNum + "','" + (startDate + " " + startTime + ":00") + "'," + parkid + ",'" + parklotAdminId
 				+ "'," + "'" + parklotName + "')";
 		SysoUtils.print("insertSql=" + insertSql);
 
-		DBBean dbBean = new DBBean();
 		int k = dbBean.executeUpdate(insertSql);
 		if (k == 1) {
 			SysoUtils.print("添加预定信息成功。");
 		} else {
 			SysoUtils.print("添加预定信息失败。");
-		}
+		}*/
 
 		int i = dbBean.executeUpdate(insertSQL);
 		int j = dbBean.executeUpdate(updateSQL);
@@ -560,5 +562,37 @@ public class ParkSerImpl implements ParkSer {
 			e.printStackTrace();
 		}
 		return plateNum;
+	}
+
+	@Override
+	public int insertEvaluate(String openid, String evaluateScore, String evaluateContent) {
+		String createTime = CreateDate.getDate();
+		int result = 0;
+		String parklotName = ""; // 从数据库查出来的停车场名称
+		// 如果预定过停车场，可以评价，暂时查的预定表，没有查进出表和购买表
+		String selectSQL = "select parklotname, startdate from table_qquserreserve where openid = '"+openid+"' group by startdate desc limit 1";
+		DBBean dbBean = new DBBean();
+		ResultSet rSet = dbBean.executeQuery(selectSQL);
+		try {
+			while (rSet.next()) {
+				parklotName = rSet.getString("parklotname");
+				String insertSQL = "insert into table_evaluate values ('"+openid+"','"+parklotName+"',"+Integer.parseInt(evaluateScore)+",'"+evaluateContent+"','"+createTime+"')";
+				result = dbBean.executeUpdate(insertSQL);
+				SysoUtils.print("提交评价结果："+result);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		finally {
+			try {
+				
+				dbBean.close();
+				rSet.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return result;
+		
 	}
 }

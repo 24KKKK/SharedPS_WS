@@ -131,5 +131,19 @@ public interface ParkSer {
 	public String selectPlateNum(
 			@WebParam(name = "openid", targetNamespace = "http://service.dyf.com") String openid);
 	
+	/**
+	 * 将用户评价保存进数据库
+	 * @param openid 用户唯一识别码
+	 * @param evaluateScore 评价分数
+	 * @param evaluateContent 评价内容
+	 * @return int 是否保存成功
+	 */
+	@WebResult(name = "insertResult", targetNamespace = "http://service.dyf.com")
+	@WebMethod(action = "http://service.dyf.com/insertEvaluate")
+	public int insertEvaluate(
+			@WebParam(name = "openid", targetNamespace = "http://service.dyf.com") String openid,
+			@WebParam(name = "evaluateScore", targetNamespace = "http://service.dyf.com") String evaluateScore,
+			@WebParam(name = "evaluateContent", targetNamespace = "http://service.dyf.com") String evaluateContent);
+	
 	
 }
